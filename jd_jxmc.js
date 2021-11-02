@@ -196,7 +196,6 @@ async function pasture() {
         }
       );
       await $.wait(2000)
-      const petNum = ($.homeInfo?.petinfo || []).length
       await takeGetRequest('GetCardInfo');
       if ($.GetCardInfo && $.GetCardInfo.cardinfo) {
         let msg = '';
@@ -204,13 +203,11 @@ async function pasture() {
           if (vo.currnum > 0) {
             msg += `${vo.currnum}张${cardinfo[vo.cardtype]}卡片 `
           }
-          if (petNum < 6) {
-            $.cardType = vo.cardtype
-            for (let i = vo.currnum; i >= vo.neednum; i -= vo.neednum) {
-              console.log(`${cardinfo[vo.cardtype]}卡片已满${vo.neednum}张，去兑换...`)
-              await $.wait(5000)
-              await takeGetRequest("Combine")
-            }
+          $.cardType = vo.cardtype
+          for (let i = vo.currnum; i >= vo.neednum; i -= vo.neednum) {
+            console.log(`${cardinfo[vo.cardtype]}卡片已满${vo.neednum}张，去兑换...`)
+            await $.wait(5000)
+            await takeGetRequest("Combine")
           }
         }
         console.log(`\n可抽奖次数：${$.GetCardInfo.times}${msg ? `,拥有卡片：${msg}` : ''}\n`)
@@ -224,6 +221,7 @@ async function pasture() {
         }
       }
       console.log("查看宠物信息")
+      const petNum = ($.homeInfo?.petinfo || []).length
       if (!petNum) {
         console.log(`你的鸡都生完蛋跑掉啦！！`)
         await buyNewPet(true)
@@ -279,22 +277,8 @@ async function pasture() {
       await takeGetRequest('cow');
       await $.wait(2000);
     }
-    await $.wait(2000);
-    await takeGetRequest('GetUserLoveInfo');
-    if ($.GetUserLoveInfo) {
-      for (let key of Object.keys($.GetUserLoveInfo)) {
-        let vo = $.GetUserLoveInfo[key]
-        if (vo.drawstatus === 1) {
-          await $.wait(2000);
-          $.lovevalue = vo.lovevalue;
-          await takeGetRequest('DrawLoveHongBao');
-        }
-      }
-    }
     $.taskList = [];
     $.dateType = ``;
-    $.source = `jxmc`;
-    $.bizCode = `jxmc`;
     for (let j = 2; j >= 0; j--) {
       if (j === 0) {
         $.dateType = ``;
@@ -332,17 +316,6 @@ async function pasture() {
         }
       }
     }
-    $.taskList = [];
-    $.dateType = `2`;
-    $.source = `jxmc_zanaixin`;
-    $.bizCode = `jxmc_zanaixin`;
-    for (let j = 2; j >= 0; j--) {
-      await takeGetRequest('GetUserTaskStatusList');
-      await $.wait(2000);
-      await doTask(j);
-      await $.wait(2000);
-    }
-
     await takeGetRequest('GetHomePageInfo');
     await $.wait(2000);
     let materialNumber = 0;
@@ -483,9 +456,8 @@ async function takeGetRequest(type) {
       myRequest = getGetRequest(`GetHomePageInfo`, url);
       break;
     case 'GetUserTaskStatusList':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/GetUserTaskStatusList?_=${Date.now() + 2}&source=${$.source}&bizCode=${$.bizCode}&dateType=${$.dateType}&showAreaTaskFlag=0&jxpp_wxapp_type=7`
-      url += `&_stk=${getStk(url)}`
-      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/GetUserTaskStatusList?_=${Date.now() + 2}&source=jxmc&bizCode=jxmc&dateType=${$.dateType}&_stk=bizCode%2CdateType%2Csource&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
       myRequest = getGetRequest(`GetUserTaskStatusList`, url);
       break;
     case 'mowing': //割草
@@ -505,15 +477,13 @@ async function takeGetRequest(type) {
       myRequest = getGetRequest(`jump`, url);
       break;
     case 'DoTask':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/DoTask?_=${Date.now() + 2}&source=${$.source}&taskId=${$.oneTask.taskId}&bizCode=${$.bizCode}&configExtra=`;
-      url += `&_stk=${getStk(url)}`;
-      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/DoTask?_=${Date.now() + 2}&source=jxmc&taskId=${$.oneTask.taskId}&bizCode=jxmc&configExtra=&_stk=bizCode%2CconfigExtra%2Csource%2CtaskId&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}` + `&sceneval=2&g_login_type=1&g_ty=ajax`;
       myRequest = getGetRequest(`DoTask`, url);
       break;
     case 'Award':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/Award?_=${Date.now() + 2}&source=${$.source}&taskId=${$.oneTask.taskId}&bizCode=${$.bizCode}`;
-      url += `&_stk=${getStk(url)}`;
-      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/Award?_=${Date.now() + 2}&source=jxmc&taskId=${$.oneTask.taskId}&bizCode=jxmc&_stk=bizCode%2Csource%2CtaskId&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}` + `&sceneval=2&g_login_type=1&g_ty=ajax`;
       myRequest = getGetRequest(`Award`, url);
       break;
     case 'cow':
@@ -578,27 +548,15 @@ async function takeGetRequest(type) {
       break;
     case 'Combine':
       url = `https://m.jingxi.com/jxmc/operservice/Combine?channel=7&sceneid=1001&type=2&activeid=${$.activeid}&activekey=${$.activekey}&cardtype=${$.cardType}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`;
+      url += `&_stk=${getStk(url)}`
       url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
       myRequest = getGetRequest(`Combine`, url);
       break;
     case 'BuyNew':
       url = `https://m.jingxi.com/jxmc/operservice/BuyNew?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&type=${$.petType}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`;
+      url += `&_stk=${getStk(url)}`
       url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
       myRequest = getGetRequest(`BuyNew`, url);
-      break;
-    case 'GetUserLoveInfo':
-      url = `https://m.jingxi.com/jxmc/queryservice/GetUserLoveInfo?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`;
-      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
-      myRequest = getGetRequest(`GetUserLoveInfo`, url);
-      break;
-    case 'DrawLoveHongBao':
-      url = `https://m.jingxi.com/jxmc/operservice/DrawLoveHongBao?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&lovevalue=${$.lovevalue}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`;
-      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
-      myRequest = getGetRequest(`DrawLoveHongBao`, url);
       break;
     default:
       console.log(`错误${type}`);
@@ -811,20 +769,6 @@ function dealReturn(type, data) {
         console.log(`获得一只${petInfo[type].name}，宠物id：${petid}，当前拥有${currnum}只鸡`)
       } else {
         console.log(`BuyNew：${JSON.stringify(data)}`)
-      }
-      break;
-    case 'GetUserLoveInfo':
-      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
-      if (data.ret === 0) {
-        $.GetUserLoveInfo = data.data.lovelevel
-      }
-      break;
-    case 'DrawLoveHongBao':
-      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
-      if (data.ret === 0) {
-        console.log(`领取爱心奖励获得：${data.data.rewardinfo.prizevalue / 100}红包`)
-      } else {
-        console.log(`DrawLoveHongBao：${JSON.stringify(data)}`)
       }
       break;
     default:
