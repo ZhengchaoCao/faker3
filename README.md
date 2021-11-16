@@ -3,6 +3,10 @@
 
 Faker维护仓库，收集全网目前能正常使用的脚本。
 
+##  纯净版特色
+
+纯净版去除所有内置助力码，以及切断所有助力池的连接，专注于内部助力。
+
 #### [点击直达频道](https://t.me/pandaqx)
 
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=shufflewzc&bg_color=30,e96443,904e95&title_color=fff&text_color=fff)](https://github.com/anuraghazra/github-readme-stats)
@@ -11,12 +15,8 @@ Faker维护仓库，收集全网目前能正常使用的脚本。
 
 
 
-【Faker集合仓库】
-ql repo https://ghproxy.com/https://github.com/shufflewzc/faker2.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendnotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql"
-
-【圈x订阅地址】
-
-https://ghproxy.com/https://raw.githubusercontent.com/shufflewzc/faker/main/qx.json
+【Faker集合仓库纯净版】
+ql repo https://ghproxy.com/https://github.com/shufflewzc/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendnotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql"
 
 【QX系列教程】
 https://www.notion.so/Quantumult-X-cd78c6ab616e4ebf947519b2dd690a0c
