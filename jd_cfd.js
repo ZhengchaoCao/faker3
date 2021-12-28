@@ -48,6 +48,9 @@ function oc(fn, defaultVal) {//optioanl chaining
     return undefined
   }
 }
+function nc(val1, val2) {//nullish coalescing
+  return val1 != undefined ? val1 : val2
+}
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -171,11 +174,13 @@ async function cfd() {
     //小程序每日签到
     await $.wait(2000)
     await getTakeAggrPage('wxsign')
-
-    //使用道具
-    await $.wait(2000)
-    await GetPropCardCenterInfo()
-
+    
+    if (new Date().getHours() < 22){
+      //使用道具
+      await $.wait(2000)
+      await GetPropCardCenterInfo()
+    }
+    
     //助力奖励
     await $.wait(2000)
     await getTakeAggrPage('helpdraw')
@@ -1136,7 +1141,7 @@ function getUserInfo(showInvite = true) {
           console.log(`${$.name} QueryUserInfo API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-          $.showPp = oc(() => data.AreaAddr.dwIsSHowPp) || 0
+          $.showPp = nc(oc(() => data.AreaAddr.dwIsSHowPp), 0)
           const {
             buildInfo = {},
             ddwRichBalance,
@@ -1281,7 +1286,7 @@ function browserTask(taskType) {
     switch (taskType) {
       case 0://日常任务
         for (let i = 0; i < $.allTask.length; i++) {
-          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes, bizCode = oc(() => $.allTask[i].bizCode) || "jxbfd"
+          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes, bizCode = nc(oc(() => $.allTask[i].bizCode), "jxbfd")
           const taskinfo = $.allTask[i];
           console.log(`开始第${i + 1}个【📆日常任务】${taskinfo.taskName}\n`);
           for (let i = start; i < end; i++) {
@@ -1729,7 +1734,7 @@ async function requestAlgo() {
       "expandParams": ""
     })
   }
-  new Promise(async resolve => {
+  return new Promise(async resolve => {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
