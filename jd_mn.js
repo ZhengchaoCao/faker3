@@ -51,7 +51,7 @@ if (process.env.NO_RUSH && process.env.NO_RUSH != "") {
             }
             
             authorCodeList = [
-                '79049b1783134e4d8f0730eee2311369',
+                '',
                 // 'a25c65caa19e480093256c2be4347c10',
                 // '413dcfbcc0414bd3a10a4402bc984deb',
                 // '37f4602c3ada4ef9873a4f84b5495a0c'
