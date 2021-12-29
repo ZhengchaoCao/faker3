@@ -4,26 +4,26 @@
 修改自 @yangtingxiao 抽奖机脚本
 活动入口：京东APP首页-闪购-闪购盲盒
 网页地址：https://h5.m.jd.com/babelDiy/Zeus/3vzA7uGuWL2QeJ5UeecbbAVKXftQ/index.html
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js
+更新地址：jd_sgmh.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #闪购盲盒
-20 8 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js, tag=闪购盲盒, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 8 * * * jd_sgmh.js, tag=闪购盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js, tag=闪购盲盒
+cron "20 8 * * *" script-path=jd_sgmh.js, tag=闪购盲盒
 
 ===============Surge=================
-闪购盲盒 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js
+闪购盲盒 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=jd_sgmh.js
 
 ============小火箭=========
-闪购盲盒 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js, cronexpr="20 8 * * *", timeout=3600, enable=true
+闪购盲盒 = type=cron,script-path=jd_sgmh.js, cronexpr="20 8 * * *", timeout=3600, enable=true
 
  */
-const $ = new Env('闪购盲盒_内部互助');
+const $ = new Env('闪购盲盒');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let appId = '1EFRXxg', homeDataFunPrefix = 'interact_template', collectScoreFunPrefix = 'harmony', message = '';
@@ -181,13 +181,13 @@ function interact_template_getHomeData(timeout = 0) {
 								if (!code)
 									continue;
 								await harmony_collectScore(code, data.data.result.taskVos[i].taskId);
-								await $.wait(2000);
+								await $.wait(1000);
 								if(!llcanhelp)
 									break;								
 							}
 						} else if (data.data.result.taskVos[i].status === 3) {
 							console.log('开始抽奖');
-							await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
+							//await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
 						} else if ([0, 13].includes(data.data.result.taskVos[i].taskType)) {
 							if (data.data.result.taskVos[i].status === 1) {
 								await harmony_collectScore(data.data.result.taskVos[i].simpleRecordInfoVo.taskToken, data.data.result.taskVos[i].taskId);
@@ -195,9 +195,9 @@ function interact_template_getHomeData(timeout = 0) {
 						} else if ([14, 6].includes(data.data.result.taskVos[i].taskType)) {
 							for (let j = 0; j < (data.data.result.userInfo.lotteryNum || 0); j++) {
 								if (appId === "1EFRTxQ") {
-									await ts_smashGoldenEggs();
+									//await ts_smashGoldenEggs();
 								} else {
-									await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
+									//await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
 								}
 							}
 						}
@@ -209,7 +209,7 @@ function interact_template_getHomeData(timeout = 0) {
 										if (list[j].itemId) {
 											await harmony_collectScore(list[j].taskToken, data.data.result.taskVos[i].taskId, list[j].itemId, 1);
 											if (k === data.data.result.taskVos[i].maxTimes - 1)
-												await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
+												//await interact_template_getLotteryResult(data.data.result.taskVos[i].taskId);
 										} else {
 											await harmony_collectScore(list[j].taskToken, data.data.result.taskVos[i].taskId)
 										}
