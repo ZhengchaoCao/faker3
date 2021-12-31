@@ -16,7 +16,7 @@ Faker维护仓库，收集全网目前能正常使用的脚本。
 
 
 【Faker集合仓库纯净版】
-ql repo https://ghproxy.com/https://github.com/shufflewzc/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendnotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql"
+ql repo https://ghproxy.com/https://github.com/shufflewzc/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
 
 【QX系列教程】
 https://www.notion.so/Quantumult-X-cd78c6ab616e4ebf947519b2dd690a0c
