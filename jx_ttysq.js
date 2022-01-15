@@ -1,8 +1,7 @@
 /*
 #天天压岁钱
-33 0,13 * * * jd_ttysq.js
-
-内部互助
+京喜App-下方中间-天天压岁钱
+33 0,14,20 * * * jx_ttysq.js
 
 #############
 PS:(不是玩代码的人，写代码有bug很正常！！)
@@ -38,7 +37,7 @@ const JD_API_HOST = `https://m.jingxi.com`;
     cookiesArr = cookiesArr.map(ck => ck + `joyytoken=50084${joyToken};`)
     $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS
     //做任务
-    console.log(`\n内部助力！！\n`)
+    console.log(`\n优先内部，剩余助力作者！！\n`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -53,6 +52,9 @@ const JD_API_HOST = `https://m.jingxi.com`;
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             //做任务
             await main()
+            if (i != cookiesArr.length - 1) {
+                await $.wait(3000)
+            }
         }
     }
     let res = await getAuthorShareCode('')
@@ -64,11 +66,11 @@ const JD_API_HOST = `https://m.jingxi.com`;
         if (authorCode.length > 3) {
             authorCode = authorCode.splice(0, 3)
         }
-        authorCode = authorCode.map(code => {
+        authorCode = authorCode.map(entity => {
             return {
                 "user": "author",
-                "code": code,
-                "redId": Math.floor(1 + Math.random() * 10),
+                "code": entity.code,
+                "redId": entity.rpids[Math.floor((Math.random() * entity.rpids.length))],
                 "beHelp": 0,
                 "helpId": $.taskId
             }
@@ -99,7 +101,7 @@ const JD_API_HOST = `https://m.jingxi.com`;
                         console.log(`\n京东账号${$.index} ${$.nickName || $.UserName}去助力${$.shareCoseList[y].user}助力码${$.shareCoseList[y].code}`)
                         console.log(`助力任务`)
                         await task(`jxnhj/DoTask`, `taskId=${$.taskId}&strShareId=${$.shareCoseList[y].code}&bizCode=jxnhj_task&configExtra=`);
-                        //if ($.max === true){}
+                        if ($.max === true){$.shareCoseList[y].beHelp = false}
                         await $.wait(3000);
                         if ($.canHelp === false) { break }
                     }
@@ -176,11 +178,11 @@ function getAuthorShareCode(url) {
 async function main() {
     try {
         await task(`jxnhj/GetUserInfo`, `strInviteId=&nopopup=0`, show = true)
-        await $.wait(500)
+        await $.wait(1500)
         await task(`jxnhj/BestWishes`)
-        await $.wait(500)
+        await $.wait(1500)
         await task(`jxnhj/GetTaskList`)
-        await $.wait(500)
+        await $.wait(1500)
         if (!$.allTaskList) {
             console.log(`获取任务列表失败`)
         } else {
