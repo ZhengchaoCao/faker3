@@ -1,9 +1,9 @@
 ## 重要通知
 ### 落霞与孤鹜齐飞,秋水共长天一色。
 
-Faker自用仓库，收集全网目前能正常使用的脚本。
+Faker自用仓库。
 
-##  纯净版特色
+##  纯净版
 
 纯净版去除所有内置助力码，以及切断所有助力池的连接，专注于内部助力。
 
@@ -13,15 +13,12 @@ Faker自用仓库，收集全网目前能正常使用的脚本。
 
 
 
+【注意】拉库前请打开青龙面板-配置文件 第18行 GithubProxyUrl="" 双引号中的内容去掉。
 
+【青龙】
+ql repo https://github.com.cnpmjs.org/shufflewzc/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
 
-【Faker集合仓库纯净版】
-ql repo https://ghproxy.com/https://github.com/shufflewzc/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
-
-【QX系列教程】
-https://www.notion.so/Quantumult-X-cd78c6ab616e4ebf947519b2dd690a0c
-
-【青龙系列教程】
+【青龙说明】
 https://www.notion.so/Cent-OS-7-6-1c598629675145988b43a37998a1604a
 
 
