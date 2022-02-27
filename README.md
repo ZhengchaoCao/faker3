@@ -18,7 +18,7 @@ Faker备份自用仓库。
 【青龙】
 ql repo https://github.com.cnpmjs.org/ZhengchaoCao/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
 
-【青龙说明】
+
 
 
 
