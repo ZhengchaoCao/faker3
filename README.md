@@ -17,7 +17,7 @@ Faker备份自用仓库。
 【注意】拉库前请打开青龙面板-配置文件 第18行 GithubProxyUrl="" 双引号中的内容去掉。
 
 【青龙】
-ql repo https://github.com.cnpmjs.org/ZhengchaoCao/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
+ql repo https://github.com/ZhengchaoCao/faker3.git "jd_|jx_|gua_|jddj_|getJDCookie" "activity|backUp" "^jd[^_]|USER|function|utils|sendNotify|ZooFaker_Necklace.js|JDJRValidator_|sign_graphics_validate|ql|JDSignValidator"
 
 
 
